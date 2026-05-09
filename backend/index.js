@@ -21,7 +21,10 @@ startPriceEngine();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: [
+      "https://dhan-setu-six.vercel.app",
+      "https://dhan-setu-qef5.vercel.app",
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   }),
