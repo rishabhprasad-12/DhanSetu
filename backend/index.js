@@ -73,9 +73,9 @@ app.use(cookieParser());
 //     });
 //     res.send('Done!');
 // })
-app.use("/auth", authRoute);
-app.use("/auth", getRoute);
-app.use("/auth", postRoute);
+app.use("/api/auth", authRoute);
+app.use("/api/auth", getRoute);
+app.use("/api/auth", postRoute);
 
 app.get("/", (req, res) => {
   res.send("Backend Running Successfully");
