@@ -1,4 +1,39 @@
+# dependencies
 node_modules/
-.env
-dist/
+
+# production
 build/
+dist/
+
+# env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# editor files
+.vscode/
+.idea/
+
+# cache
+.cache/
+.parcel-cache/
+
+# vite
+vite.svg
+
+# coverage
+coverage/
+
+# misc
+*.log
