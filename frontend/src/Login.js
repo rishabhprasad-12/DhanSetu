@@ -37,7 +37,7 @@ export default function Login() {
         showToast(res.data.message, "success");
 
         setTimeout(() => {
-          window.location.href = "http://localhost:3001";
+          window.location.href = "https://dhan-setu-qef5.vercel.app";
         }, 1500);
       }
 

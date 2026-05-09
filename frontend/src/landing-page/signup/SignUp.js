@@ -75,7 +75,7 @@ export default function SignUp() {
         localStorage.setItem("token", res.data.token);
 
         setTimeout(() => {
-          window.location.href = "http://localhost:3001";
+          window.location.href = "https://dhan-setu-qef5.vercel.app";
         }, 1500)
       }
     } catch (err) {
