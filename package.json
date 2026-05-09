@@ -1,0 +1,10 @@
+{
+  "name": "dhansetu",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "concurrently \"npm start --prefix frontend\" \"npm start --prefix dashboard\" \"npm start --prefix backend\""
+  },
+  "dependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
