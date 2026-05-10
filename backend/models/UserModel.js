@@ -22,8 +22,13 @@ const userSchema = new mongoose.Schema({
   balance: { type: Number, default: 100000 }, // demo money
 }, { timestamps: true });
 
-userSchema.pre("save", async function () {
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    return next();
+  }
+
   this.password = await bcrypt.hash(this.password, 12);
+  next();
 });
 
 module.exports = mongoose.models.user || mongoose.model("user", userSchema);

@@ -68,7 +68,7 @@ export default function Login() {
           </div>
         </div>
       </div>
-      
+
       <form
         onSubmit={handleSubmit}
         className="card p-5 shadow p-3 mb-5 bg-body-tertiary rounded"
@@ -82,13 +82,14 @@ export default function Login() {
           <h3 className="m-3 p-2">Login to Kite</h3>
         </div>
         <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
+          <label htmlFor="inputEmail" className="form-label">
             Email
           </label>
           <input
             type="email"
             className="form-control"
-            id="exampleInputEmail1"
+            id="inputEmail"
+            autoComplete="current-email"
             aria-describedby="emailHelp"
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -99,13 +100,14 @@ export default function Login() {
           </div>
         </div>
         <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">
+          <label htmlFor="inputPassword" className="form-label">
             Password
           </label>
           <input
             type="password"
             className="form-control"
-            id="exampleInputPassword1"
+            id="inputPassword"
+            autoComplete="current-password"
             value={form.password}
             onChange={(e) => setForm({ ...form, password: e.target.value })}
             required
