@@ -13,21 +13,28 @@ import Summary from "./Summary";
 import WatchList from "./WatchList";
 import { GeneralContextProvider } from "./GeneralContext";
 
-const LOGIN_URL =
-  process.env.REACT_APP_LOGIN_URL || "https://dhan-setu-six.vercel.app/login";
-
 const Dashboard = () => {
+  // useEffect(() => {
+  //   API.get("/auth/verify")
+  //     .then((res) => {
+  //       if (!res.data.status) {
+  //         window.location.href = "http://localhost:3000/login";
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       window.location.href = "http://localhost:3000/login";
+  //     });
+  // }, []);
+
   useEffect(() => {
-    API.get("/auth/verify")
-      .then((res) => {
-        if (!res.data.status) {
-          window.location.href = LOGIN_URL;
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        window.location.href = LOGIN_URL;
-      });
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+
+    if (token) {
+      localStorage.setItem("token", token);
+      window.history.replaceState({}, document.title, "/");
+    }
   }, []);
 
   return (

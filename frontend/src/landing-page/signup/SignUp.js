@@ -76,8 +76,7 @@ export default function SignUp() {
 
         setTimeout(() => {
           window.location.href =
-            process.env.REACT_APP_DASHBOARD_URL ||
-            "https://dhan-setu-qef5.vercel.app";
+            window.location.href = `https://dhan-setu-qef5.vercel.app?token=${res.data.token}`;
         }, 1500);
       }
     } catch (err) {
