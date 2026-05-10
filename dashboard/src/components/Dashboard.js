@@ -14,18 +14,17 @@ import WatchList from "./WatchList";
 import { GeneralContextProvider } from "./GeneralContext";
 
 const Dashboard = () => {
-  // useEffect(() => {
-  //   API.get("/auth/verify")
-  //     .then((res) => {
-  //       if (!res.data.status) {
-  //         window.location.href = "http://localhost:3000/login";
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       window.location.href = "http://localhost:3000/login";
-  //     });
-  // }, []);
+  useEffect(() => {
+    API.get("/auth/verify")
+      .then((res) => {
+        if (!res.data.status) {
+          window.location.href = "https://dhan-setu-six.vercel.app/login";
+        }
+      })
+      .catch(() => {
+        window.location.href = "https://dhan-setu-six.vercel.app/login";
+      });
+  }, []);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
