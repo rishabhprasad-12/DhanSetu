@@ -1,41 +1,18 @@
-const nodemailer = require("nodemailer");
+const https = require("node:https");
 
 const sendEmail = async (email, otp) => {
-  try {
-    // Try port 465 first (SSL), then fallback to 587 (TLS) if needed
-    const transporter = nodemailer.createTransport({
-      host: "smtp-relay.brevo.com",
-      port: 465,
-      secure: true,
-      family: 4,
-      connectionTimeout: 10000, // 10 seconds
-      socketTimeout: 10000, // 10 seconds
-      greetingTimeout: 10000, // 10 seconds
+  const apiKey = process.env.BREVO_API_KEY;
+  const senderEmail = process.env.BREVO_EMAIL;
 
-      auth: {
-        user: process.env.BREVO_EMAIL,
-        pass: process.env.BREVO_PASSWORD,
-      },
+  if (!apiKey) {
+    throw new Error("BREVO_API_KEY is not configured");
+  }
 
-      // Connection pool settings
-      pool: {
-        maxConnections: 3,
-        maxMessages: 100,
-        rateDelta: 1000,
-        rateLimit: 5,
-      },
+  if (!senderEmail) {
+    throw new Error("BREVO_EMAIL is not configured");
+  }
 
-      // Debug logging
-      logger: process.env.NODE_ENV === "development",
-      debug: process.env.NODE_ENV === "development",
-    });
-
-    const info = await transporter.sendMail({
-      from: `"DhanSetu" <${process.env.BREVO_EMAIL}>`,
-      to: email,
-      subject: "Verify Your DhanSetu Account",
-
-      html: `
+  const htmlContent = `
     <div style="
       font-family: Arial, sans-serif;
       background-color: #f4f4f4;
@@ -103,33 +80,64 @@ const sendEmail = async (email, otp) => {
         </p>
       </div>
     </div>
-  `,
+  `;
+
+  const payload = JSON.stringify({
+    sender: {
+      name: "DhanSetu",
+      email: senderEmail,
+    },
+    to: [{ email }],
+    subject: "Verify Your DhanSetu Account",
+    htmlContent,
+  });
+
+  const requestOptions = {
+    method: "POST",
+    hostname: "api.sendinblue.com",
+    path: "/v3/smtp/email",
+    headers: {
+      "Content-Type": "application/json",
+      "api-key": apiKey,
+      "Content-Length": Buffer.byteLength(payload),
+    },
+  };
+
+  const responseBody = await new Promise((resolve, reject) => {
+    const req = https.request(requestOptions, (res) => {
+      let data = "";
+      res.on("data", (chunk) => (data += chunk));
+      res.on("end", () => {
+        try {
+          const parsed = data ? JSON.parse(data) : {};
+          if (res.statusCode >= 200 && res.statusCode < 300) {
+            return resolve(parsed);
+          }
+
+          const error = new Error(
+            parsed.message ||
+              `Brevo API request failed with status ${res.statusCode}`,
+          );
+          error.statusCode = res.statusCode;
+          error.responseBody = parsed;
+          return reject(error);
+        } catch (parseError) {
+          return reject(
+            new Error(`Failed to parse Brevo response: ${parseError.message}`),
+          );
+        }
+      });
     });
 
-    console.log("Email sent:", info.response);
+    req.on("error", reject);
+    req.write(payload);
+    req.end();
+  });
 
-    return info;
-  } catch (error) {
-    console.error("Email error:", error.message);
-    console.error("Error code:", error.code);
-    console.error("Error command:", error.command);
+  console.log("✅ Email sent successfully via Brevo API");
+  console.log("Brevo response:", responseBody);
 
-    // Provide helpful diagnostics
-    if (error.code === "ETIMEDOUT") {
-      console.error(
-        "❌ Connection timeout - Check if:",
-        "\n1. Brevo SMTP credentials are correct (BREVO_EMAIL, BREVO_PASSWORD)",
-        "\n2. Render allows outbound SMTP (may require paid plan)",
-        "\n3. Network/firewall isn't blocking smtp-relay.brevo.com:465",
-      );
-    }
-
-    if (error.code === "EAUTH") {
-      console.error("❌ Authentication failed - Check Brevo credentials");
-    }
-
-    throw error;
-  }
+  return responseBody;
 };
 
 module.exports = sendEmail;

@@ -23,12 +23,16 @@ app.use(
   cors({
     origin: [
       "https://dhan-setu-six.vercel.app",
+      "http://localhost:3000",
       "https://dhan-setu-qef5.vercel.app",
+      "http://localhost:3001",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   }),
 );
+
+// app.options("*", cors());
 
 app.use(bodyParser.json());
 
@@ -79,7 +83,8 @@ app.use("/api/auth", getRoute);
 app.use("/api/auth", postRoute);
 
 app.get("/", (req, res) => {
-  res.send("Backend Running Successfully");
+  console.log(PORT);
+  res.send(`Backend Running Successfully ${PORT}`);
 });
 
 app.listen(PORT, () => {

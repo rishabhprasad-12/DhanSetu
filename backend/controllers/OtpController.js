@@ -35,11 +35,15 @@ module.exports.sendOtp = async (req, res) => {
       message: "OTP sent successfully",
     });
   } catch (error) {
-    console.log("Send OTP Error:", error);
+    console.error("Send OTP Error:", error.message);
+    if (error.response?.body) {
+      console.error("Brevo API response:", error.response.body);
+    }
 
     res.status(500).json({
       success: false,
       message: "Failed to send OTP",
+      error: error.message,
     });
   }
 };

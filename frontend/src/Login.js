@@ -112,6 +112,9 @@ export default function Login() {
             onChange={(e) => setForm({ ...form, password: e.target.value })}
             required
           />
+          <div id="emailHelp" className="form-text">
+            <span className="text-danger">Note:</span>{" "}Remember your password.
+          </div>
         </div>
         <button
           type="submit"
