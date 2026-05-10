@@ -3,7 +3,8 @@ const jwt = require("jsonwebtoken");
 
 module.exports.userVerification = async (req, res) => {
   try {
-    const token = req.cookies?.token;
+    const token =
+      req.cookies?.token || req.headers.authorization?.replace("Bearer ", "");
 
     if (!token) {
       return res.status(401).json({ status: false, message: "No token" });

@@ -68,15 +68,17 @@ export default function SignUp() {
       const res = await signup(form);
 
       if (!res.data.success) {
-        showToast(res.data.message || "Signup failed", 'danger');
+        showToast(res.data.message || "Signup failed", "danger");
       } else {
-        showToast("Account created successfully!", 'success');
+        showToast("Account created successfully!", "success");
 
         localStorage.setItem("token", res.data.token);
 
         setTimeout(() => {
-          window.location.href = "https://dhan-setu-qef5.vercel.app";
-        }, 1500)
+          window.location.href =
+            process.env.REACT_APP_DASHBOARD_URL ||
+            "https://dhan-setu-qef5.vercel.app";
+        }, 1500);
       }
     } catch (err) {
       showToast(err.response?.data?.message || "Signup failed", "danger");

@@ -24,10 +24,11 @@ module.exports.Signup = async (req, res, next) => {
     const token = createSecretToken(user._id);
 
     res.cookie("token", token, {
-      withCredentials: true,
-      httpOnly: false,
-      secure: false, // true in production (HTTPS)
-      sameSite: "lax",
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      path: "/",
     });
 
     res.status(201).json({
@@ -37,7 +38,6 @@ module.exports.Signup = async (req, res, next) => {
       user,
     });
     next();
-
   } catch (error) {
     console.error(error);
     res
@@ -49,7 +49,7 @@ module.exports.Signup = async (req, res, next) => {
 module.exports.Login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    
+
     if (!email || !password) {
       return res
         .status(400)
@@ -73,17 +73,17 @@ module.exports.Login = async (req, res, next) => {
     const token = createSecretToken(user._id);
 
     res.cookie("token", token, {
-      withCredentials: true,
-      httpOnly: false,
-      secure: false, 
-      sameSite: "lax",
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      path: "/",
     });
 
     res
       .status(200)
       .json({ message: "You're logged in successfully", success: true, token });
     next();
-
   } catch (error) {
     console.error(error);
     res

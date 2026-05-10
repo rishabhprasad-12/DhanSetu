@@ -15,7 +15,7 @@ export default function Login() {
     display: false,
   });
 
-  const showToast = ( message, type ) => {
+  const showToast = (message, type) => {
     setToast({ message, type, display: true });
 
     setTimeout(() => {
@@ -37,10 +37,11 @@ export default function Login() {
         showToast(res.data.message, "success");
 
         setTimeout(() => {
-          window.location.href = "https://dhan-setu-qef5.vercel.app";
+          window.location.href =
+            process.env.REACT_APP_DASHBOARD_URL ||
+            "https://dhan-setu-qef5.vercel.app";
         }, 1500);
       }
-
     } catch (error) {
       console.error("Login error:", error);
       showToast(error.response?.data?.message || "Login failed", "danger");
@@ -113,7 +114,7 @@ export default function Login() {
             required
           />
           <div id="emailHelp" className="form-text">
-            <span className="text-danger">Note:</span>{" "}Remember your password.
+            <span className="text-danger">Note:</span> Remember your password.
           </div>
         </div>
         <button

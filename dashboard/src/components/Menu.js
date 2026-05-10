@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import GeneralContext from "./GeneralContext";
 
 const Menu = () => {
+  const LOGIN_URL =
+    process.env.REACT_APP_LOGIN_URL || "https://dhan-setu-six.vercel.app/login";
+
   const { user, setUser } = useContext(GeneralContext);
 
   const [selectedMenu, setSelectedMenu] = useState(0);
@@ -22,12 +25,11 @@ const Menu = () => {
 
     setUser(null);
 
-    window.location.href = "http://localhost:3000/login";
-  }
+    window.location.href = LOGIN_URL;
+  };
 
   const menuClass = "menu";
   const activeMenuClass = "menu selected";
-
 
   return (
     <div className="menu-container">
