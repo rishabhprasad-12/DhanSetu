@@ -2,16 +2,32 @@ const nodemailer = require("nodemailer");
 
 const sendEmail = async (email, otp) => {
   try {
+    // Try port 465 first (SSL), then fallback to 587 (TLS) if needed
     const transporter = nodemailer.createTransport({
       host: "smtp-relay.brevo.com",
-      port: 587,
-      secure: false,
+      port: 465,
+      secure: true,
       family: 4,
+      connectionTimeout: 10000, // 10 seconds
+      socketTimeout: 10000, // 10 seconds
+      greetingTimeout: 10000, // 10 seconds
 
       auth: {
         user: process.env.BREVO_EMAIL,
         pass: process.env.BREVO_PASSWORD,
       },
+
+      // Connection pool settings
+      pool: {
+        maxConnections: 3,
+        maxMessages: 100,
+        rateDelta: 1000,
+        rateLimit: 5,
+      },
+
+      // Debug logging
+      logger: process.env.NODE_ENV === "development",
+      debug: process.env.NODE_ENV === "development",
     });
 
     const info = await transporter.sendMail({
@@ -94,7 +110,24 @@ const sendEmail = async (email, otp) => {
 
     return info;
   } catch (error) {
-    console.error("Email error:", error);
+    console.error("Email error:", error.message);
+    console.error("Error code:", error.code);
+    console.error("Error command:", error.command);
+
+    // Provide helpful diagnostics
+    if (error.code === "ETIMEDOUT") {
+      console.error(
+        "❌ Connection timeout - Check if:",
+        "\n1. Brevo SMTP credentials are correct (BREVO_EMAIL, BREVO_PASSWORD)",
+        "\n2. Render allows outbound SMTP (may require paid plan)",
+        "\n3. Network/firewall isn't blocking smtp-relay.brevo.com:465",
+      );
+    }
+
+    if (error.code === "EAUTH") {
+      console.error("❌ Authentication failed - Check Brevo credentials");
+    }
+
     throw error;
   }
 };
