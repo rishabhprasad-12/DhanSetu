@@ -5,35 +5,56 @@ export default function Team() {
   return (
     <div className="container">
       <div className="row pt-5 mt-4">
-        <h1 className="fs-2 text-center fw-semibold">People</h1>
+        <h1 className="fs-2 text-center fw-semibold">
+          About
+        </h1>
       </div>
 
       <div
-        className="row text-muted"
+        className="row text-muted items-align-center"
         style={{ lineHeight: "1.8", fontSize: "1em" }}
       >
         <div className="col-6 p-5 text-center">
           <img
-            src="media/images/nithinKamath.jpg"
-            alt="founderImage"
-            style={{ borderRadius: "100%", width: "60%" }}
+            src="media/images/aboutSection.jpeg"
+            alt="about-dhansetu"
+            style={{
+              borderRadius: "20px",
+              width: "65%",
+              boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
+            }}
           />
+
           <div className="p-3">
-            <h4>Nithin Kamath</h4>
-            <p>Founder, CEO</p>
+            <h5>DhanSetu Development</h5>
+            <p>Finance • Technology • Innovation</p>
           </div>
         </div>
+
         <div className="col-6 p-5">
           <p>
-            Nitin bootstrapped and founded DhanSetu in 2026 to overcome the
-            hurdles he faced during his decade long stint as a trader. Today,
-            DhanSetu has changed the landscape of the Indian broking industry.
+            DhanSetu started as an idea to create a modern and intuitive trading
+            platform that feels simple, fast, and accessible.
           </p>
+
           <p>
-            He is a member of the SEBI Secondary Market Advisory Committee
-            (SMAC) and the Market Data Advisory Committee (MDAC).
+            Designed and developed with a passion for technology and finance,
+            the platform focuses on delivering a seamless investing experience
+            for the next generation of traders and investors.
           </p>
-          <p>Playing basketball is his zen.</p>
+
+          <p>
+            From authentication systems to portfolio tracking and real-time
+            order management, every feature is carefully crafted to combine
+            performance, usability, and modern design.
+          </p>
+
+          <p>
+            More than just a project, DhanSetu represents continuous learning,
+            innovation, and the journey of turning ideas into impactful
+            products.
+          </p>
+
           <p>
             Connect on <Link to="/">Homepage</Link> /{" "}
             <Link to="Q&A">TradingQnA</Link>

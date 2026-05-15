@@ -38,6 +38,7 @@ export default function Login() {
 
         setTimeout(() => {
           window.location.href = `https://dhan-setu-qef5.vercel.app?token=${res.data.token}`;
+          // window.location.href = `http://localhost:3001?token=${res.data.token}`;
         }, 1500);
       }
     } catch (error) {

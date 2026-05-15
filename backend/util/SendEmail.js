@@ -13,74 +13,80 @@ const sendEmail = async (email, otp) => {
   }
 
   const htmlContent = `
+  <div style="
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 40px 20px;
+    min-height: 100vh;
+  ">
+    
     <div style="
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      padding: 40px 20px;
+      max-width: 500px;
+      margin: auto;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 40px 30px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     ">
-      <div style="
-        max-width: 500px;
-        margin: auto;
-        background: #ffffff;
-        border-radius: 12px;
-        padding: 40px 30px;
-        text-align: center;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+
+      <img 
+        src="https://dhansetu-ol4a.onrender.com/logo.svg"
+        alt="brand-logo"
+        style="
+          width: 8em;
+          margin-bottom: 20px;
+        "
+      />
+
+      <p style="
+        color: #555;
+        font-size: 16px;
+        margin-bottom: 30px;
       ">
-        
-        <h1 style="
-          color: #387ed1;
-          margin-bottom: 10px;
-        ">
-          DhanSetu
-        </h1>
+        Your One-Time Password (OTP) for email verification is:
+      </p>
 
-        <p style="
-          color: #555;
-          font-size: 16px;
-          margin-bottom: 30px;
-        ">
-          Your One-Time Password (OTP) for email verification is:
-        </p>
-
-        <div style="
-          display: inline-block;
-          background: #f1f5ff;
-          color: #387ed1;
-          font-size: 32px;
-          font-weight: bold;
-          letter-spacing: 8px;
-          padding: 15px 30px;
-          border-radius: 10px;
-          margin-bottom: 30px;
-        ">
-          ${otp}
-        </div>
-
-        <p style="
-          color: #777;
-          font-size: 14px;
-          line-height: 1.6;
-        ">
-          This OTP is valid for 5 minutes.<br/>
-          Please do not share it with anyone.
-        </p>
-
-        <hr style="
-          border: none;
-          border-top: 1px solid #eee;
-          margin: 30px 0;
-        " />
-
-        <p style="
-          color: #999;
-          font-size: 12px;
-        ">
-          © ${new Date().getFullYear()} DhanSetu. All rights reserved.
-        </p>
+      <div style="
+        display: inline-block;
+        background: #f1f5ff;
+        color: #1e81b0;
+        font-size: 32px;
+        font-weight: bold;
+        letter-spacing: 8px;
+        padding: 15px 30px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+      ">
+        ${otp}
       </div>
+
+      <p style="
+        color: #777;
+        font-size: 14px;
+        line-height: 1.6;
+      ">
+        This OTP is valid for 5 minutes.
+        <br/>
+        Please do not share it with anyone.
+      </p>
+
+      <hr style="
+        border: none;
+        border-top: 1px solid #eee;
+        margin: 30px 0;
+      " />
+
+      <p style="
+        color: #999;
+        font-size: 12px;
+      ">
+        © ${new Date().getFullYear()} DhanSetu. All rights reserved.
+      </p>
+
     </div>
-  `;
+  </div>
+`;
 
   const payload = JSON.stringify({
     sender: {

@@ -10,6 +10,8 @@ const authRoute = require("./routes/AuthRoute");
 const getRoute = require("./routes/GetRoute");
 const postRoute = require("./routes/PostRoute");
 
+const path = require("path");
+
 const startPriceEngine = require('./util/PriceEngine')
 
 const PORT = process.env.PORT || 5000;
@@ -37,6 +39,8 @@ app.use(
 app.use(bodyParser.json());
 
 app.use(cookieParser());
+
+app.use(express.static(path.join(__dirname, "public")));
 
 // app.get('/addPosition', async(req, res) => {
 //     let tempPositions = [
