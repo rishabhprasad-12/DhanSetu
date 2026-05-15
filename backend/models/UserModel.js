@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
   balance: { type: Number, default: 100000 }, // demo money
 }, { timestamps: true });
 
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function() {
   if (!this.isModified("password")) {
     return;
   }
